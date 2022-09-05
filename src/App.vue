@@ -2,7 +2,11 @@
   <h1>{{ title }}</h1>
   <br/>
   <div v-if="showModal">
-    <Modal theme="sale" @close="toggleModal">
+    <Modal theme="" @close="toggleModal">
+      <template v-slot:links>
+        <a href="#">Sign up now</a>
+        <a href="#">More Info</a>
+      </template>
       <h1>Samundra Dhakal</h1>
       <p>Grab a coffee and start coding</p>
     </Modal>
