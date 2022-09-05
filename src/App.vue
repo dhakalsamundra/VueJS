@@ -11,7 +11,15 @@
       <p>Grab a coffee and start coding</p>
     </Modal>
   </div>
-  <button @click.shift="toggleModal">open Modal</button>
+
+  <div v-if="showModalTwo">
+    <Modal @close="toggleModalTwo">
+      <h1>Wow</h1>
+      <p>Coffee is not so hot. Replace and get the hot one.</p>
+    </Modal>
+  </div>
+  <button @click.shift="toggleModal">open Modal(Press Shift)</button>
+  <button @click="toggleModalTwo">open Modal</button>
   <input type="text" ref="name">
   <button @click="handleClick">Click me</button>
 </template>
@@ -26,9 +34,8 @@ export default {
   data(){
     return{
       title: "My first Vue App :) ",
-      header:"Signup",
-      text:"SignIn",
-      showModal: false
+      showModal: false,
+      showModalTwo: false
     }
   },
   methods: {
@@ -39,6 +46,9 @@ export default {
     },
     toggleModal(){
       this.showModal = !this.showModal
+    },
+    toggleModalTwo(){
+      this.showModalTwo = !this.showModalTwo
     }
   }
 
