@@ -1,62 +1,41 @@
 <template>
-  <h1>{{ title }}</h1>
-  <br/>
-  <teleport to=".modals" v-if="showModal">
-    <Modal theme="" @close="toggleModal">
-      <template v-slot:links>
-        <a href="#">Sign up now</a>
-        <a href="#">More Info</a>
-      </template>
-      <h1>Samundra Dhakal</h1>
-      <p>Grab a coffee and start coding</p>
-    </Modal>
-  </teleport>
-
-  <div v-if="showModalTwo">
-    <Modal @close="toggleModalTwo">
-      <h1>Wow</h1>
-      <p>Coffee is not so hot. Replace and get the hot one.</p>
-    </Modal>
-  </div>
-  <button @click.shift="toggleModal">open Modal(Press Shift)</button>
-  <button @click="toggleModalTwo">open Modal</button>
-  <input type="text" ref="name">
-  <button @click="handleClick">Click me</button>
+  <h1>Samundra Reaction Timer</h1>
+  <button @click="start" :disabled="isPlaying">Play</button>
+  <Block_item v-if="isPlaying" :delay="delay" @end="endGame"/>
+  <Results_item v-if="showResult" :score="score"/>
 </template>
 
 <script>
-  import Modal from "./components/Modal-component"
+import Block_item from "./components/Block_item.vue"
+import Results_item from "./components/Results_item.vue"
 export default {
   name: 'App',
-  components: {
-    Modal
-},
+  components: {Block_item, Results_item},
   data(){
-    return{
-      title: "My first Vue App :) ",
-      showModal: false,
-      showModalTwo: false
+    return {
+      isPlaying: false,
+      delay:null,
+      score: null,
+      showResult: false
     }
   },
   methods: {
-    handleClick() {
-      // console.log(this.$refs.name)
-      this.$refs.name.classList.add("active")
-      this.$refs.name.focus()
+    start(){
+      this.delay=2000 + Math.random()*5000
+      this.isPlaying=true
+      this.showResult = false
     },
-    toggleModal(){
-      this.showModal = !this.showModal
-    },
-    toggleModalTwo(){
-      this.showModalTwo = !this.showModalTwo
+    endGame(value) {
+      this.score = value
+      this.isPlaying = false
+      this.showResult = true
     }
   }
-
 }
 </script>
 
 <style>
-#app, .modals {
+#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -64,9 +43,19 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-h1{
-  border-bottom: 1px solid #ddd;
-  display: inline-block;
-  padding-bottom: 10px;
+button{
+  background: #0faf87;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin: 10px;
+}
+button[disabled]{
+  opacity: 0.2;
+  cursor: not-allowed;
 }
 </style>
