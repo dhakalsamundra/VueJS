@@ -1,12 +1,26 @@
 <template>
-  <h1>Samundra Reaction Timer</h1>>
+  <h1>Samundra Reaction Timer</h1>
+  <button @click="start" :disabled="isPlaying">Play</button>
+  <Block_item v-if="isPlaying" :delay="delay"/>
 </template>
 
 <script>
-
+import Block_item from "./components/Block_item.vue"
 export default {
   name: 'App',
-  components: {}
+  components: {Block_item},
+  data(){
+    return {
+      isPlaying: false,
+      delay:null
+    }
+  },
+  methods: {
+    start(){
+      this.delay=2000 + Math.random()*5000
+      this.isPlaying=true
+    }
+  }
 }
 </script>
 
